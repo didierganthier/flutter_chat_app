@@ -27,12 +27,12 @@ class _SignInState extends State<SignIn> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextField(
+                TextFormField(
                   controller: emailTextEditingController,
                   style: simpleTextFieldStyle(),
                   decoration: textFieldInputDecoration("email"),
                 ),
-                TextField(
+                TextFormField(
                   controller: passwordTextEditingController,
                   style: simpleTextFieldStyle(),
                   decoration: textFieldInputDecoration("password"),
