@@ -8,10 +8,17 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
+  TextEditingController usernameTextEditingController = TextEditingController();
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController passwordTextEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Flutter Chat App"),
+      ),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height - 50,
@@ -22,14 +29,17 @@ class _SignUpState extends State<SignUp> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
+                  controller: usernameTextEditingController,
                   style: simpleTextFieldStyle(),
                   decoration: textFieldInputDecoration("username"),
                 ),
                 TextField(
+                  controller: emailTextEditingController,
                   style: simpleTextFieldStyle(),
                   decoration: textFieldInputDecoration("email"),
                 ),
                 TextField(
+                  controller: passwordTextEditingController,
                   style: simpleTextFieldStyle(),
                   decoration: textFieldInputDecoration("password"),
                 ),
