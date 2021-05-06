@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/services/auth.dart';
+import 'package:flutter_chat_app/views/chatRoomScreen.dart';
 import 'package:flutter_chat_app/views/signin.dart';
 import 'package:flutter_chat_app/widgets/widgets.dart';
 
@@ -27,7 +28,10 @@ class _SignUpState extends State<SignUp> {
         isLoading = true;
       });
 
-      _authMethods.signUpWithEmailAndPassword(emailTextEditingController.text, passwordTextEditingController.text).then((value) => print(value)).catchError((error)=> print(error));
+      _authMethods.signUpWithEmailAndPassword(emailTextEditingController.text, passwordTextEditingController.text)
+          .then((value){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomScreen(),));
+      }).catchError((error)=> print(error));
     }
   }
 
@@ -74,7 +78,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       GestureDetector(
                         onTap: () {
-
+                          signMeUp();
                         },
                         child: Container(
                           alignment: Alignment.center,
