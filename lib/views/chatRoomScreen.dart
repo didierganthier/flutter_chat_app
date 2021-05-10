@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/helper/authenticate.dart';
 import 'package:flutter_chat_app/services/auth.dart';
+import 'package:flutter_chat_app/views/search.dart';
 import 'package:flutter_chat_app/views/signin.dart';
 
 class ChatRoomScreen extends StatefulWidget {
@@ -29,6 +30,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
             ),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen(),),);
+        },
       ),
     );
   }
