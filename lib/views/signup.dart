@@ -5,6 +5,11 @@ import 'package:flutter_chat_app/views/signin.dart';
 import 'package:flutter_chat_app/widgets/widgets.dart';
 
 class SignUp extends StatefulWidget {
+
+  final Function toggle;
+
+  SignUp({this.toggle});
+
   @override
   _SignUpState createState() => _SignUpState();
 }
@@ -127,12 +132,15 @@ class _SignUpState extends State<SignUp> {
                             style: simpleTextFieldStyle().copyWith(fontSize: 17),
                           ),
                           GestureDetector(
-                            onTap: ()=> Navigator.pop(context),
-                            child: Text(
-                              "signIn now",
-                              style: simpleTextFieldStyle().copyWith(
-                                fontSize: 17,
-                                decoration: TextDecoration.underline,
+                            onTap: ()=> widget.toggle(),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              child: Text(
+                                "signIn now",
+                                style: simpleTextFieldStyle().copyWith(
+                                  fontSize: 17,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
                             ),
                           ),

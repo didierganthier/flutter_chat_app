@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/helper/authenticate.dart';
 import 'package:flutter_chat_app/services/auth.dart';
 import 'package:flutter_chat_app/views/signin.dart';
 
@@ -20,7 +21,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
           GestureDetector(
             onTap: () {
               authMethods.signOut();
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignIn(),),);
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Authenticate(),),);
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
