@@ -13,16 +13,28 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Container(
         child: Column(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(),
-                ),
-                CircleAvatar(
-                  child: Icon(Icons.search),
-                  radius: 30,
-                )
-              ],
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Search username...",
+                        hintStyle: TextStyle(
+                          color: Colors.white54,
+                        ),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    child: Icon(Icons.search, size: 40,),
+                    radius: 30,
+                  )
+                ],
+              ),
             )
           ],
         ),
