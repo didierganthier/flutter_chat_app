@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/services/auth.dart';
+import 'package:flutter_chat_app/services/database.dart';
 import 'package:flutter_chat_app/views/chatRoomScreen.dart';
 import 'package:flutter_chat_app/views/signin.dart';
 import 'package:flutter_chat_app/widgets/widgets.dart';
@@ -20,6 +21,8 @@ class _SignUpState extends State<SignUp> {
 
   AuthMethods _authMethods = AuthMethods();
 
+  DatabaseMethods databaseMethods = DatabaseMethods();
+
   final formKey = GlobalKey<FormState>();
   TextEditingController usernameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
@@ -33,8 +36,15 @@ class _SignUpState extends State<SignUp> {
         isLoading = true;
       });
 
-      _authMethods.signUpWithEmailAndPassword(emailTextEditingController.text, passwordTextEditingController.text)
-          .then((value){
+      _authMethods.signUpWithEmailAndPassword(emailTextEditingController.text, passwordTextEditingController.text).then((value){
+
+        Map<String, dynamic> userMap = {
+          "name": usernameTextEditingController.text,
+          "email": emailTextEditingController.text
+        };
+
+        databaseMethods.uploadUserInfo(userMap);
+
         Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomScreen(),));
       }).catchError((error)=> print(error));
     }
@@ -62,12 +72,15 @@ class _SignUpState extends State<SignUp> {
                       TextFormField(
                         validator: (value) => value.isEmpty || value.length < 2? "Please provide a valid username" : null,
                         controller: usernameTextEditingController,
+                        textInputAction: TextInputAction.next,
                         style: simpleTextFieldStyle(),
                         decoration: textFieldInputDecoration("username"),
                       ),
                       TextFormField(
                         validator: (value) => RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value) ? null : "Enter correct email",
                         controller: emailTextEditingController,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
                         style: simpleTextFieldStyle(),
                         decoration: textFieldInputDecoration("email"),
                       ),
@@ -75,6 +88,10 @@ class _SignUpState extends State<SignUp> {
                         obscureText: true,
                         validator: (value) => value.isEmpty || value.length < 6? "Please provide a password 6+ characters" : null,
                         controller: passwordTextEditingController,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (value) {
+                          signMeUp();
+                        },
                         style: simpleTextFieldStyle(),
                         decoration: textFieldInputDecoration("password"),
                       ),
@@ -136,7 +153,7 @@ class _SignUpState extends State<SignUp> {
                             child: Container(
                               padding: EdgeInsets.symmetric(vertical: 8),
                               child: Text(
-                                "signIn now",
+                                "Sign In now",
                                 style: simpleTextFieldStyle().copyWith(
                                   fontSize: 17,
                                   decoration: TextDecoration.underline,
