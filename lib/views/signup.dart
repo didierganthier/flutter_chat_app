@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/helper/helperFunctions.dart';
 import 'package:flutter_chat_app/services/auth.dart';
 import 'package:flutter_chat_app/services/database.dart';
 import 'package:flutter_chat_app/views/chatRoomScreen.dart';
-import 'package:flutter_chat_app/views/signin.dart';
 import 'package:flutter_chat_app/widgets/widgets.dart';
 
 class SignUp extends StatefulWidget {
@@ -37,15 +37,20 @@ class _SignUpState extends State<SignUp> {
       });
 
       _authMethods.signUpWithEmailAndPassword(emailTextEditingController.text, passwordTextEditingController.text).then((value){
+        if(value != null){
+          Map<String, dynamic> userMap = {
+            "name": usernameTextEditingController.text,
+            "email": emailTextEditingController.text
+          };
 
-        Map<String, dynamic> userMap = {
-          "name": usernameTextEditingController.text,
-          "email": emailTextEditingController.text
-        };
+          HelperFunctions.saveUserLoggedInSharePreference(true);
+          HelperFunctions.saveUserNameSharePreference(usernameTextEditingController.text);
+          HelperFunctions.saveUserEmailSharePreference(emailTextEditingController.text);
 
-        databaseMethods.uploadUserInfo(userMap);
+          databaseMethods.uploadUserInfo(userMap);
 
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomScreen(),));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomScreen(),));
+        }
       }).catchError((error)=> print(error));
     }
   }
