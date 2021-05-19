@@ -58,21 +58,30 @@ class _SignInState extends State<SignIn> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  TextFormField(
-                    controller: emailTextEditingController,
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    style: simpleTextFieldStyle(),
-                    decoration: textFieldInputDecoration("email"),
-                  ),
-                  TextFormField(
-                    controller: passwordTextEditingController,
-                    style: simpleTextFieldStyle(),
-                    obscureText: true,
-                    onFieldSubmitted: (value){
-                      signMeIn();
-                    },
-                    decoration: textFieldInputDecoration("password"),
+                  Form(
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          validator: (value) => RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value) ? null : "Enter correct email",
+                          controller: emailTextEditingController,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          style: simpleTextFieldStyle(),
+                          decoration: textFieldInputDecoration("email"),
+                        ),
+                        TextFormField(
+                          obscureText: true,
+                          validator: (value) => value.isEmpty || value.length < 6? "Please provide a password 6+ characters" : null,
+                          controller: passwordTextEditingController,
+                          textInputAction: TextInputAction.done,
+                          onFieldSubmitted: (value) {
+                            signMeIn();
+                          },
+                          style: simpleTextFieldStyle(),
+                          decoration: textFieldInputDecoration("password"),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 8,
